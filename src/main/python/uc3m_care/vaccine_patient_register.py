@@ -13,6 +13,11 @@ class VaccinePatientRegister:
         self.__age = age
         justnow = datetime.utcnow()
         self.__time_stamp = datetime.timestamp(justnow)
+        # TODO Borrar only for testing
+        # print(self.__time_stamp)
+        self.__time_stamp = 1646903380.517115
+        #SEGUNDA FUNCION
+        self.__patient_sys_id = self.patient_system_id
 
     def __str__(self):
         return "VaccinePatientRegister:" + json.dumps(self.__dict__)
