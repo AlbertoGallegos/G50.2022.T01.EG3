@@ -25,9 +25,38 @@ class VaccineManager:
             raise VaccineManagementException("Id received is not a UUID")
         return True
 
+    def validate_registration_type(self, registration_type):
+        myregex = re.compile(r'(Regular|Family)')
+        res = myregex.fullmatch(registration_type)
+        if not res:
+            raise VaccineManagementException("Registration type is not valid")
+
+    def validate_name(self, name):
+        myregex = re.compile(r'^(?=.{1,30}$)(([a-zA-Z)]+\s)+[a-zA-Z]+)$')
+        res = myregex.fullmatch(name)
+        if not res:
+            raise VaccineManagementException("name surname is not valid")
+
+    def validate_phone(self, phone_number):
+        myregex = re.compile(r'^(\+)[0-9]{11}')
+        res = myregex.fullmatch(phone_number)
+        if not res:
+            raise VaccineManagementException("phone number is not valid")
+
+    def validate_age(self, age):
+        if age.isnumeric():
+            if (int(age) < 6 or int(age) > 125 ):
+                raise VaccineManagementException("age is not valid")
+        else:
+            raise VaccineManagementException("age is not numeric")
+
     def request_vaccination_id(self, patient_id, name, registration_type, phone_number, age):
         JSON_FILES_PATH = str(Path.home()) + "/PycharmProjects/G50.2022.T01.EG3/src/JsonFiles/"
         file_store = JSON_FILES_PATH + "store_patient.json"
+        self.validate_name(name)
+        self.validate_registration_type(registration_type)
+        self.validate_phone(phone_number)
+        self.validate_age(age)
         if self.validate_guid(patient_id):
             my_register = VaccinePatientRegister(patient_id, name, registration_type, phone_number, age)
 
