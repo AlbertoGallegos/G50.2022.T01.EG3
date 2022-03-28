@@ -8,8 +8,10 @@ from uc3m_care.vaccine_patient_register import VaccinePatientRegister
 from uc3m_care.vaccine_management_exception import VaccineManagementException
 from uc3m_care.vaccination_appoinment import VaccinationAppoinment
 
+
 class VaccineManager:
     """Class for providing the methods for managing the vaccination process"""
+
     def __init__(self):
         pass
 
@@ -18,8 +20,8 @@ class VaccineManager:
         try:
             uuid.UUID(guid)
             myregex = \
-            re.compile(r'^[0-9A-Fa-z]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$',\
-            re.IGNORECASE)
+                re.compile(r'^[0-9A-Fa-z]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$', \
+                           re.IGNORECASE)
             res = myregex.fullmatch(guid)
 
             if not res:
@@ -52,7 +54,7 @@ class VaccineManager:
     @staticmethod
     def validate_age(age):
         if age.isnumeric():
-            if (int(age) < 6 or int(age) > 125 ):
+            if (int(age) < 6 or int(age) > 125):
                 raise VaccineManagementException("age is not valid")
         else:
             raise VaccineManagementException("age is not numeric")
@@ -66,7 +68,7 @@ class VaccineManager:
         self.validate_age(age)
         if self.validate_guid(patient_id):
             my_register = \
-            VaccinePatientRegister(patient_id, name, registration_type, phone_number, age)
+                VaccinePatientRegister(patient_id, name, registration_type, phone_number, age)
 
             try:
                 with open(file_store, "r", encoding="utf-8", newline="") as file:
@@ -80,10 +82,10 @@ class VaccineManager:
             found = False
             for item in data_list:
                 if item["_VaccinePatientRegister__patient_id"] == patient_id and \
-                    (item["_VaccinePatientRegister__registration_type"] == registration_type) and \
-                    (item["_VaccinePatientRegister__full_name"] == name) and \
-                    (item["_VaccinePatientRegister__phone_number"] == phone_number) and \
-                    (item["_VaccinePatientRegister__age"] == age):
+                        (item["_VaccinePatientRegister__registration_type"] == registration_type) and \
+                        (item["_VaccinePatientRegister__full_name"] == name) and \
+                        (item["_VaccinePatientRegister__phone_number"] == phone_number) and \
+                        (item["_VaccinePatientRegister__age"] == age):
                     found = True
 
             if found is False:
@@ -100,15 +102,43 @@ class VaccineManager:
 
         return my_register.patient_system_id
 
-    def get_vaccine_date(json_files_path):
+    @staticmethod
+    def validate_alg(alg):
+        if alg != "SHA-256":
+             VaccineManagementException("alg is not valid")
 
+    @staticmethod
+    def validate_typ(typ):
+        if typ != "DS":
+            VaccineManagementException("typ is not valid")
+
+    @staticmethod
+    def validate_issue_at(issue_at):
+        pass
 
 
     def get_vaccine_date(self, input_file):
+        try:
+            with open(input_file, "r", encoding="utf-8", newline="") as file:
+                data_list = json.load(file)
+        except FileNotFoundError:
+            date_list = []
+        except json.JSONDecodeError as ex:
+            raise VaccineManagementException("Json Decode Error - wrong JSON Format")
+
         json_files_path = str(Path.home()) + "/PycharmProjects/G50.2022.T01.EG3/src/JsonFiles/"
         file_store_date = json_files_path + "store_date.json"
+        self.validate_alg(alg)
+        self.validate_typ(typ)
+        self.validate_patient_system_id(patient_system_id, patient_id)
+        self.validate_issued_at(issued_at)
+        self.validate_vaccinationdate(vaccinationdate)
+        self.validate_datesignature(datesignature)
+
+        request_vaccination_id()
+        if self.validate_guid(patient_system_id):
             my_appointment = \
-            VaccinationAppoinment(guid, patient_sys_id, patient_phone_number, days)
+                VaccinationAppoinment(patient_id, patient_sys_id, patient_phone_number, days)
 
             try:
                 with open(file_store_date, "r", encoding="utf-8", newline="") as file:
@@ -121,11 +151,8 @@ class VaccineManager:
 
             found = False
             for item in data_list:
-                if item["_VaccinePatientRegister__patient_id"] == patient_id and \
-                    (item["_VaccinePatientRegister__registration_type"] == registration_type) and \
-                    (item["_VaccinePatientRegister__full_name"] == name) and \
-                    (item["_VaccinePatientRegister__phone_number"] == phone_number) and \
-                    (item["_VaccinePatientRegister__age"] == age):
+                if item["PatientSystemId"] == patient_system_id and \
+                        (item["ContactPhoneNumber"] == contact_phone):
                     found = True
 
             if found is False:
@@ -141,10 +168,6 @@ class VaccineManager:
                 raise VaccineManagementException("date registered")
 
         return my_appointment.vaccination_signature
-
-
-
-
 
     # HAY QUE CAMBIAR LA FUNCION
     ''' def vaccine_patient():
@@ -192,5 +215,3 @@ class VaccineManager:
             except FileNotFoundError as ex:
                 raise VaccineManagementException("Wrong file or file path") from ex
             return True'''
-
-
