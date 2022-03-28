@@ -19,12 +19,13 @@ class VaccinationAppoinment():
             #timestamp is represneted in seconds.microseconds
             #age must be expressed in senconds to be added to the timestap
             self.__appoinment_date = self.__issued_at + (days * 24 * 60 * 60)
+        self.__date_signature = self.vaccination_signature
 
     def __signature_string(self):
         """Composes the string to be used for generating the key for the date"""
         return "{alg:" + self.__alg +",typ:" + self.__type +",patient_sys_id:" \
-        + self.__patient_sys_id + ",issuedate:" + self.__issued_at + \
-        ",vaccinationtiondate:" + self.__appoinment_date + "}"
+        + self.__patient_sys_id + ",issuedate:" + self.__issued_at.__str__() + \
+        ",vaccinationtiondate:" + self.__appoinment_date.__str__() + "}"
 
     @property
     def patient_id( self ):

@@ -21,7 +21,7 @@ class MyTestCase(unittest.TestCase):
         my_request = VaccineManager()
         value = my_request.request_vaccination_id("bb5dbd6f-d8b4-413f-8eb9-dd262cfc54e0",
         "Pedro Perez Jimenez de la Rue", "Regular", "+34123456789", "6")
-        self.assertEqual(value, "0cb194783402cdceb978ac7bdef4cab5")
+        self.assertEqual(value, "53c1e4289490e94b54c737dc402dfc54")
 
         # chequeo si esta en el fichero
 
