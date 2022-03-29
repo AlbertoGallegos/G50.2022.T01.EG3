@@ -121,6 +121,15 @@ class VaccineManager:
         try:
             with open(input_file, "r", encoding="utf-8", newline="") as file:
                 data_list = json.load(file)
+
+                patient_system_id = ""
+                contact_phone_number = ""
+
+                for patientSysId in data_list["PatientSystemID"]:
+                    patient_system_id = patient_system_id + patientSysId
+                for contactPhone in data_list["ContactPhoneNumber"]:
+                    contact_phone_number = contact_phone_number + contactPhone
+
         except FileNotFoundError:
             date_list = []
         except json.JSONDecodeError as ex:
@@ -152,7 +161,7 @@ class VaccineManager:
             found = False
             for item in data_list:
                 if item["PatientSystemId"] == patient_system_id and \
-                        (item["ContactPhoneNumber"] == contact_phone):
+                        (item["ContactPhoneNumber"] == contact_phone_number):
                     found = True
 
             if found is False:
