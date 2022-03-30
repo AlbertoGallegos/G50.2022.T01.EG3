@@ -46,7 +46,7 @@ class VaccineManager:
 
         if not res:
             raise VaccineManagementException("Date signature is not valid")
-        
+
     @staticmethod
     def validate_registration_type(registration_type):
         myregex = re.compile(r'(Regular|Family)')
@@ -130,10 +130,10 @@ class VaccineManager:
                 contact_phone_number = str()
 
                 try:
-                    for patientSysId in data_list["PatientSystemID"]:
-                        patient_system_id = patient_system_id + patientSysId
-                    for contactPhone in data_list["ContactPhoneNumber"]:
-                        contact_phone_number = contact_phone_number + contactPhone
+                    for patient_sys_id in data_list["PatientSystemID"]:
+                        patient_system_id = patient_system_id + patient_sys_id
+                    for contact_phone in data_list["ContactPhoneNumber"]:
+                        contact_phone_number = contact_phone_number + contact_phone
                 except KeyError as ex:
                     raise VaccineManagementException("Key not found or key Error") from ex
 
@@ -149,19 +149,17 @@ class VaccineManager:
             with open(store_patient, "r", encoding="utf-8", newline="") as file_p:
                 data_list = json.load(file_p)
 
-                patient_id = str()
-                patient_system_id2 = str()
+                found = False
 
                 for item in data_list:
-                    for patient_Id in item["_VaccinePatientRegister__patient_id"]:
-                        patient_id = patient_id + patient_Id
-                    for patientSysId2 in item["_VaccinePatientRegister__patient_sys_id"]:
-                        patient_system_id2 = patient_system_id2 + patientSysId2
+                    if patient_system_id == item["_VaccinePatientRegister__patient_sys_id"]:
+                        found = True
+                        patient_id = item["_VaccinePatientRegister__patient_id"]
 
         except json.JSONDecodeError as ex:
             raise VaccineManagementException("Json Decode Error - Wrong store_patient JSON Format") from ex
 
-        if patient_system_id == patient_system_id2:
+        if found:
             my_appointment = \
                 VaccinationAppoinment(patient_id,patient_system_id,contact_phone_number,10)
         else:
@@ -189,6 +187,7 @@ class VaccineManager:
             raise VaccineManagementException("Wrong file or file path") from ex
 
         return my_appointment.vaccination_signature
+
 
     def vaccine_patient(self, datesignature):
         json_file_path = str(Path.home()) + "/PycharmProjects/G50.2022.T01.EG3/src/JsonFiles/"
@@ -235,5 +234,5 @@ class VaccineManager:
             with open(file_store_vaccine, "w", encoding="utf-8", newline="") as file:
                 json.dump(data_list, file, indent=2)
         except FileNotFoundError as ex:
-             raise VaccineManagementException("Wrong file or file path") from ex
+            raise VaccineManagementException("Wrong file or file path") from ex
         return True
