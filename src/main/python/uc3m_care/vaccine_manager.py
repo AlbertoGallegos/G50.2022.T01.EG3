@@ -3,6 +3,7 @@ import re
 import uuid
 from pathlib import Path
 import json
+from datetime import datetime
 
 from uc3m_care.vaccine_patient_register import VaccinePatientRegister
 from uc3m_care.vaccine_management_exception import VaccineManagementException
@@ -32,13 +33,20 @@ class VaccineManager:
 
     @staticmethod
     def validate_patient_sys_id(patientsysid):
+        myregex = re.compile(r'^[a-f0-9]{32}$', re.IGNORECASE)
+        res = myregex.fullmatch(patientsysid)
 
-            myregex = re.compile(r'^[a-f0-9]{32}$', re.IGNORECASE)
-            res = myregex.fullmatch(patientsysid)
+        if not res:
+            raise VaccineManagementException("Patient Sys ID is not valid")
 
-            if not res:
-                raise VaccineManagementException("Patient Sys ID is not valid")
+    @staticmethod
+    def validate_date_signature(datesignature):
+        myregex = re.compile(r'^[a-f0-9]{64}$', re.IGNORECASE)
+        res = myregex.fullmatch(datesignature)
 
+        if not res:
+            raise VaccineManagementException("Date signature is not valid")
+        
     @staticmethod
     def validate_registration_type(registration_type):
         myregex = re.compile(r'(Regular|Family)')
@@ -109,7 +117,7 @@ class VaccineManager:
             if found is True:
                 raise VaccineManagementException("patient_id registered")
 
-        return my_register.patient_system_id
+            return my_register.patient_system_id
 
 
     def get_vaccine_date(self, input_file):
@@ -182,59 +190,46 @@ class VaccineManager:
 
         return my_appointment.vaccination_signature
 
-    # HAY QUE CAMBIAR LA FUNCION
-    def vaccine_patient(self, date_signature):
-
+    def vaccine_patient(self, datesignature):
         json_file_path = str(Path.home()) + "/PycharmProjects/G50.2022.T01.EG3/src/JsonFiles/"
         file_store_date = json_file_path + "store_date.json"
 
+        self.validate_date_signature(datesignature)
         try:
             with open(file_store_date, "r", encoding="utf-8", newline="") as file_d:
                 data_list = json.load(file_d)
 
-                date_signature_store = str()
-
+                found = False
                 for item in data_list:
-
-                    for signature in item["_VaccinationAppoinment__date_signature"]:
-                        date_signature_store = date_signature_store + signature
-                    date_time = item['_VaccinationAppointment__appointment_date']
+                    if item["_VaccinationAppoinment__date_signature"] == datesignature:
+                        found = True
+                        vaccination_date = item["_VaccinationAppoinment__appoinment_date"]
+                if not found:
+                    raise VaccineManagementException("Date signature not found")
 
         except FileNotFoundError:
             data_list = []
         except json.JSONDecodeError as ex:
             raise VaccineManagementException("JSON decode Error - Wrong JSON Format") from ex
 
-        if date_signature != date_signature_store:
-            raise VaccineManagementException('date_signature is not valid')
-            ''''
-            #DESDE AQUI LA PROFE
-
-                found = true
-                date_time = item['_VaccinationAppointment__appointment_date']
-
-            if not found:
-                raise VaccineManagementException('date_signature is not valid')
-            '''
         today = datetime.today().date()
-        date_patient = datetime.fromtimestamp(date_time).date()
+        date_patient = datetime.fromtimestamp(vaccination_date).date()
         if date_patient != today:
             raise VaccineManagementException('Hoy no es el día')
 
-        json_files_path = str(Path.home()) + "/PycharmProjects/G50.2022.T01.EG3/src/JsonFiles/"
-        file_store_vaccine = json_files_path + "store_vaccine.json"
+        file_store_vaccine = json_file_path + "store_vaccine.json"
 
         try:
-            with open(file_store_vaccine, "r", encoding="utf-8", newline="") as file:
-                data_list = json.load(file)
+            with open(file_store_vaccine, "r", encoding="utf-8", newline="") as file_v:
+                data_list = json.load(file_v)
         except FileNotFoundError:
             # file is not found , so  init my data_list
             data_list = []
         except json.JSONDecodeError as ex:
             raise VaccineManagementException("JSON Decode Error - Wrong JSON Format") from ex
 
-                # insertamos la fecha
-        data_list.append(date_signature.__str__())
+        # insertamos la fecha
+        data_list.append(datesignature.__str__())
         data_list.append(datetime.utcnow().__str__())
         try:
             with open(file_store_vaccine, "w", encoding="utf-8", newline="") as file:
