@@ -48,7 +48,7 @@ class MyTestCase(unittest.TestCase):
                                                   "Pedro Perez", "Regular", "+34123456789", "33")
         value = my_request.request_vaccination_id("bb5dbd6f-d8b4-413f-8eb9-dd262cfc54e0",
                                                   "Pedro Perez", "Family", "+34123456789", "33")
-        self.assertEqual(value, "eeec268711e148069ef6c06f261dbc78")
+        self.assertEqual(value, "1a35a9ba1bc30f0f56737202cea418cf")
 
         # chequeo si esta en el fichero
 
@@ -73,7 +73,7 @@ class MyTestCase(unittest.TestCase):
         my_request = VaccineManager()
         value = my_request.request_vaccination_id("bb5dbd6f-d8b4-413f-8eb9-dd262cfc54e0",
         "Pedro Perez Jimenez de la Sien", "Family", "+34123456789", "7")
-        self.assertEqual(value, "12b9e2054256b85f99ff1a9f83bf8f2a")
+        self.assertEqual(value, "4b46ffe83a98e712e70e0486b9a2ab0f")
 
         # chequeo si esta en el fichero
 
@@ -97,7 +97,7 @@ class MyTestCase(unittest.TestCase):
         my_request = VaccineManager()
         value = my_request.request_vaccination_id("bb5dbd6f-d8b4-413f-8eb9-dd262cfc54e0",
                                                   "Pedro Perez", "Regular", "+34123456789", "124")
-        self.assertEqual(value, "95c6ac84d8d2fc039c7463f0456d5a54")
+        self.assertEqual(value, "5f5d1f64ae3a736ff515697f615e15e4")
 
         # chequeo si esta en el fichero
 
@@ -121,7 +121,7 @@ class MyTestCase(unittest.TestCase):
         my_request = VaccineManager()
         value = my_request.request_vaccination_id("bb5dbd6f-d8b4-413f-8eb9-dd262cfc54e0",
                                                   "Pedro Perez", "Regular", "+34123456789", "125")
-        self.assertEqual(value, "4e76ab9aeb1eaf43ee56549c4cb1795d")
+        self.assertEqual(value, "71a02a010a5ec57b498890003a55f647")
 
         # chequeo si esta en el fichero
 

@@ -31,6 +31,15 @@ class VaccineManager:
         return True
 
     @staticmethod
+    def validate_patient_sys_id(patientsysid):
+
+            myregex = re.compile(r'^[a-f0-9]{32}$', re.IGNORECASE)
+            res = myregex.fullmatch(patientsysid)
+
+            if not res:
+                raise VaccineManagementException("Patient Sys ID is not valid")
+
+    @staticmethod
     def validate_registration_type(registration_type):
         myregex = re.compile(r'(Regular|Family)')
         res = myregex.fullmatch(registration_type)
@@ -102,79 +111,74 @@ class VaccineManager:
 
         return my_register.patient_system_id
 
-    @staticmethod
-    def validate_alg(alg):
-        if alg != "SHA-256":
-             VaccineManagementException("alg is not valid")
-
-    @staticmethod
-    def validate_typ(typ):
-        if typ != "DS":
-            VaccineManagementException("typ is not valid")
-
-    @staticmethod
-    def validate_issue_at(issue_at):
-        pass
-
 
     def get_vaccine_date(self, input_file):
+
         try:
             with open(input_file, "r", encoding="utf-8", newline="") as file:
                 data_list = json.load(file)
 
-                patient_system_id = ""
-                contact_phone_number = ""
+                patient_system_id = str()
+                contact_phone_number = str()
 
-                for patientSysId in data_list["PatientSystemID"]:
-                    patient_system_id = patient_system_id + patientSysId
-                for contactPhone in data_list["ContactPhoneNumber"]:
-                    contact_phone_number = contact_phone_number + contactPhone
+                try:
+                    for patientSysId in data_list["PatientSystemID"]:
+                        patient_system_id = patient_system_id + patientSysId
+                    for contactPhone in data_list["ContactPhoneNumber"]:
+                        contact_phone_number = contact_phone_number + contactPhone
+                except KeyError as ex:
+                    raise VaccineManagementException("Key not found or key Error") from ex
 
-        except FileNotFoundError:
-            date_list = []
         except json.JSONDecodeError as ex:
-            raise VaccineManagementException("Json Decode Error - wrong JSON Format")
+            raise VaccineManagementException("JSON Decode Error - Wrong input JSON Format") from ex
+
+        self.validate_patient_sys_id(patient_system_id)
+        self.validate_phone_number(contact_phone_number)
 
         json_files_path = str(Path.home()) + "/PycharmProjects/G50.2022.T01.EG3/src/JsonFiles/"
-        file_store_date = json_files_path + "store_date.json"
-        self.validate_alg(alg)
-        self.validate_typ(typ)
-        self.validate_patient_system_id(patient_system_id, patient_id)
-        self.validate_issued_at(issued_at)
-        self.validate_vaccinationdate(vaccinationdate)
-        self.validate_datesignature(datesignature)
+        store_patient = json_files_path + "store_patient.json"
+        try:
+            with open(store_patient, "r", encoding="utf-8", newline="") as file_p:
+                data_list = json.load(file_p)
 
-        request_vaccination_id()
-        if self.validate_guid(patient_system_id):
+                patient_id = str()
+                patient_system_id2 = str()
+
+                for item in data_list:
+                    for patient_Id in item["_VaccinePatientRegister__patient_id"]:
+                        patient_id = patient_id + patient_Id
+                    for patientSysId2 in item["_VaccinePatientRegister__patient_sys_id"]:
+                        patient_system_id2 = patient_system_id2 + patientSysId2
+
+        except json.JSONDecodeError as ex:
+            raise VaccineManagementException("Json Decode Error - Wrong store_patient JSON Format") from ex
+
+        if patient_system_id == patient_system_id2:
             my_appointment = \
-                VaccinationAppoinment(patient_id, patient_sys_id, patient_phone_number, days)
+                VaccinationAppoinment(patient_id,patient_system_id,contact_phone_number,10)
+        else:
+            raise VaccineManagementException("patient_system_id is different")
 
-            try:
-                with open(file_store_date, "r", encoding="utf-8", newline="") as file:
-                    data_list = json.load(file)
-            except FileNotFoundError:
-                # file is not found , so  init my data_list
-                data_list = []
-            except json.JSONDecodeError as ex:
-                raise VaccineManagementException("JSON Decode Error - Wrong JSON Format") from ex
+        file_store_date = json_files_path + "store_date.json"
 
-            found = False
-            for item in data_list:
-                if item["PatientSystemId"] == patient_system_id and \
-                        (item["ContactPhoneNumber"] == contact_phone_number):
-                    found = True
+        try:
+            with open(file_store_date, "r", encoding="utf-8", newline="") as file_d:
+                data_list = json.load(file_d)
+        except FileNotFoundError:
+            # file is not found , so  init my data_list
+            data_list = []
+        except json.JSONDecodeError as ex:
+            raise VaccineManagementException("JSON Decode Error - Wrong JSON Format") from ex
 
-            if found is False:
-                data_list.append(my_appointment.__dict__)
+        found = False
+        if found is False:
+            data_list.append(my_appointment.__dict__)
 
-            try:
-                with open(file_store_date, "w", encoding="utf-8", newline="") as file:
-                    json.dump(data_list, file, indent=2)
-            except FileNotFoundError as ex:
-                raise VaccineManagementException("Wrong file or file path") from ex
-
-            if found is True:
-                raise VaccineManagementException("date registered")
+        try:
+            with open(file_store_date, "w", encoding="utf-8", newline="") as file:
+                json.dump(data_list, file, indent=2)
+        except FileNotFoundError as ex:
+            raise VaccineManagementException("Wrong file or file path") from ex
 
         return my_appointment.vaccination_signature
 
