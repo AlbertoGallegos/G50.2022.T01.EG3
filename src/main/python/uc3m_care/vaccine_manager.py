@@ -214,7 +214,7 @@ class VaccineManager:
         today = datetime.today().date()
         date_patient = datetime.fromtimestamp(vaccination_date).date()
         if date_patient != today:
-            raise VaccineManagementException('Hoy no es el día')
+            raise VaccineManagementException('Today is not the day')
 
         file_store_vaccine = json_file_path + "store_vaccine.json"
 

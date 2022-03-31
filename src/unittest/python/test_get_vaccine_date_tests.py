@@ -59,12 +59,12 @@ class MyTestCase(unittest.TestCase):
        json_files_rf2_path = str(Path.home()) + "/PycharmProjects/G50.2022.T01.EG3/src/JsonFiles/Rf2/"
        file_test = json_files_rf2_path + "test_ok.json"
        json_files_path = str(Path.home()) + "/PycharmProjects/G50.2022.T01.EG3/src/JsonFiles/"
-       file_store = json_files_path + "store_patient.json"
+       file_store_patient = json_files_path + "store_patient.json"
        json_files_path = str(Path.home()) + "/PycharmProjects/G50.2022.T01.EG3/src/JsonFiles/"
        file_store_date = json_files_path + "store_date.json"
        my_manager = VaccineManager()
-       if os.path.isfile(file_store):
-           os.remove(file_store)
+       if os.path.isfile(file_store_patient):
+           os.remove(file_store_patient)
        if os.path.isfile(file_store_date):
            os.remove(file_store_date)
 
@@ -119,9 +119,9 @@ class MyTestCase(unittest.TestCase):
        file_test = json_files_rf2_path + "test_ok.json"
        my_manager = VaccineManager()
        json_files_path = str(Path.home()) + "/PycharmProjects/G50.2022.T01.EG3/src/JsonFiles/"
-       file_store = json_files_path + "store_patient.json"
-       if os.path.isfile(file_store):
-           os.remove(file_store)
+       file_store_patient = json_files_path + "store_patient.json"
+       if os.path.isfile(file_store_patient):
+           os.remove(file_store_patient)
 
        # añado al paciente al almacen
        my_manager.request_vaccination_id("bb5dbd6f-d8b4-413f-8eb9-dd262cfc54e0",
