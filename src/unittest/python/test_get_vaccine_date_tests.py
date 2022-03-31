@@ -115,19 +115,20 @@ class MyTestCase(unittest.TestCase):
 
    @freeze_time('2022-03-17')
    def test_get_vaccine_date_nook(self):
-       json_files_rf2_path = str(Path.home()) + "/PycharmProjects/G50.2022.T01.EG3/src/JsonFiles/Rf2/"
-       file_test = json_files_rf2_path + "test_ok.json"
-       my_manager = VaccineManager()
-       json_files_path = str(Path.home()) + "/PycharmProjects/G50.2022.T01.EG3/src/JsonFiles/"
-       file_store_patient = json_files_path + "store_patient.json"
-       if os.path.isfile(file_store_patient):
-           os.remove(file_store_patient)
 
-       # añado al paciente al almacen
-       my_manager.request_vaccination_id("bb5dbd6f-d8b4-413f-8eb9-dd262cfc54e0",
+        json_files_rf2_path = str(Path.home()) + "/PycharmProjects/G50.2022.T01.EG3/src/JsonFiles/Rf2/"
+        file_test = json_files_rf2_path + "test_ok.json"
+        my_manager = VaccineManager()
+        json_files_path = str(Path.home()) + "/PycharmProjects/G50.2022.T01.EG3/src/JsonFiles/"
+        file_store_patient = json_files_path + "store_patient.json"
+        if os.path.isfile(file_store_patient):
+            os.remove(file_store_patient)
+
+        # añado al paciente al almacen
+        my_manager.request_vaccination_id("bb5dbd6f-d8b4-413f-8eb9-dd262cfc54e0",
                                              "Pedro Ramon Puig", "Regular", "+34123456789", "23")
 
-       # chequeo el metodo
-       with self.assertRaises(VaccineManagementException) as cm:
-            my_manager.get_vaccine_date(file_test)
-       self.assertEqual(cm.exception.message, "patient_system_id is different")
+        # chequeo el metodo
+        with self.assertRaises(VaccineManagementException) as cm:
+             my_manager.get_vaccine_date(file_test)
+        self.assertEqual(cm.exception.message, "patient_system_id is different")

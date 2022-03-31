@@ -207,7 +207,7 @@ class VaccineManager:
                     raise VaccineManagementException("Date signature not found")
 
         except FileNotFoundError:
-            data_list = []
+            raise VaccineManagementException("Store_date does not exist")
         except json.JSONDecodeError as ex:
             raise VaccineManagementException("JSON decode Error - Wrong JSON Format") from ex
 

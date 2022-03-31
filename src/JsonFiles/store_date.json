@@ -8,5 +8,15 @@
     "_VaccinationAppoinment__issued_at": 1647475200.0,
     "_VaccinationAppoinment__appoinment_date": 1648339200.0,
     "_VaccinationAppoinment__date_signature": "2f61ce90ae7d11c3bd9cfae77a17097c0716fd1eb39df725641d46b62e85bac1"
+  },
+  {
+    "_VaccinationAppoinment__alg": "SHA-256",
+    "_VaccinationAppoinment__type": "DS",
+    "_VaccinationAppoinment__patient_id": "bb5dbd6f-d8b4-413f-8eb9-dd262cfc54e0",
+    "_VaccinationAppoinment__patient_sys_id": "2eb710a76d36b7b1f5e4149aca713744",
+    "_VaccinationAppoinment__phone_number": "+34123456789",
+    "_VaccinationAppoinment__issued_at": 1647475200.0,
+    "_VaccinationAppoinment__appoinment_date": 1648339200.0,
+    "_VaccinationAppoinment__date_signature": "15c9755ccb8307d808e0ace5821e6b0940130b7b3b493eebfbf2d1aaf39976fb"
   }
 ]
