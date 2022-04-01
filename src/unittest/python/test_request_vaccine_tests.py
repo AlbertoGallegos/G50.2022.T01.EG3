@@ -304,9 +304,9 @@ class MyTestCase(unittest.TestCase):
         my_request = VaccineManager()
 
         with self.assertRaises(VaccineManagementException) as c_m:
-           my_request.request_vaccination_id("bb5dbd6f-d8b4-413f-8eb9-dd262cfc54e0",
+            my_request.request_vaccination_id("bb5dbd6f-d8b4-413f-8eb9-dd262cfc54e0",
                                               "Pedro Perez", "Regular", "+34123456789", "33")
-           my_request.request_vaccination_id("bb5dbd6f-d8b4-413f-8eb9-dd262cfc54e0",
+            my_request.request_vaccination_id("bb5dbd6f-d8b4-413f-8eb9-dd262cfc54e0",
                                              "Pedro Perez", "Regular", "+34123456789", "33")
         self.assertEqual("patient_id registered", c_m.exception.message)
 

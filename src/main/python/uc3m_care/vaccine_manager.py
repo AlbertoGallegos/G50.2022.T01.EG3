@@ -5,9 +5,9 @@ from pathlib import Path
 import json
 from datetime import datetime
 
-from uc3m_care.vaccine_patient_register import VaccinePatientRegister
-from uc3m_care.vaccine_management_exception import VaccineManagementException
-from uc3m_care.vaccination_appoinment import VaccinationAppoinment
+from .vaccine_patient_register import VaccinePatientRegister
+from .vaccine_management_exception import VaccineManagementException
+from .vaccination_appoinment import VaccinationAppoinment
 
 
 class VaccineManager:
@@ -21,8 +21,9 @@ class VaccineManager:
         try:
             uuid.UUID(guid)
             myregex = \
-                re.compile(r'^[0-9A-Fa-z]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$', \
-                           re.IGNORECASE)
+                re.compile\
+                (r'^[0-9A-Fa-z]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$',
+                 re.IGNORECASE)
             res = myregex.fullmatch(guid)
 
             if not res:
@@ -99,10 +100,10 @@ class VaccineManager:
             found = False
             for item in data_list:
                 if item["_VaccinePatientRegister__patient_id"] == patient_id and \
-                        (item["_VaccinePatientRegister__registration_type"] == registration_type) and \
-                        (item["_VaccinePatientRegister__full_name"] == name) and \
-                        (item["_VaccinePatientRegister__phone_number"] == phone_number) and \
-                        (item["_VaccinePatientRegister__age"] == age):
+                    (item["_VaccinePatientRegister__registration_type"] == registration_type) and \
+                    (item["_VaccinePatientRegister__full_name"] == name) and \
+                    (item["_VaccinePatientRegister__phone_number"] == phone_number) and \
+                    (item["_VaccinePatientRegister__age"] == age):
                     found = True
 
             if found is False:
@@ -118,7 +119,6 @@ class VaccineManager:
                 raise VaccineManagementException("patient_id registered")
 
             return my_register.patient_system_id
-
 
     def get_vaccine_date(self, input_file):
 
@@ -157,11 +157,12 @@ class VaccineManager:
                         patient_id = item["_VaccinePatientRegister__patient_id"]
 
         except json.JSONDecodeError as ex:
-            raise VaccineManagementException("Json Decode Error - Wrong store_patient JSON Format") from ex
+            raise VaccineManagementException\
+                ("Json Decode Error - Wrong store_patient JSON Format") from ex
 
         if found:
             my_appointment = \
-                VaccinationAppoinment(patient_id,patient_system_id,contact_phone_number,10)
+                VaccinationAppoinment(patient_id, patient_system_id, contact_phone_number, 10)
         else:
             raise VaccineManagementException("patient_system_id is different")
 
@@ -206,8 +207,8 @@ class VaccineManager:
                 if not found:
                     raise VaccineManagementException("Date signature not found")
 
-        except FileNotFoundError:
-            raise VaccineManagementException("Store_date does not exist")
+        except FileNotFoundError as ex:
+            raise VaccineManagementException("Store_date does not exist") from ex
         except json.JSONDecodeError as ex:
             raise VaccineManagementException("JSON decode Error - Wrong JSON Format") from ex
 
