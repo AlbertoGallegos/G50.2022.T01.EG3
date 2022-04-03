@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="test_vaccine_patient_tests.MyTestCase-20220403151303" tests="7" file="test_vaccine_patient_tests.py" time="0.055" timestamp="2022-04-03T15:13:03" failures="0" errors="0" skipped="0">
+	<testcase classname="test_vaccine_patient_tests.MyTestCase" name="test_vaccine_patient_nook" time="0.005" timestamp="2022-04-03T15:13:03"/>
+	<testcase classname="test_vaccine_patient_tests.MyTestCase" name="test_vaccine_patient_nook2" time="0.006" timestamp="2022-04-03T15:13:03"/>
+	<testcase classname="test_vaccine_patient_tests.MyTestCase" name="test_vaccine_patient_nook3" time="0.007" timestamp="2022-04-03T15:13:03"/>
+	<testcase classname="test_vaccine_patient_tests.MyTestCase" name="test_vaccine_patient_nook4" time="0.006" timestamp="2022-04-03T15:13:03"/>
+	<testcase classname="test_vaccine_patient_tests.MyTestCase" name="test_vaccine_patient_nook5" time="0.007" timestamp="2022-04-03T15:13:03"/>
+	<testcase classname="test_vaccine_patient_tests.MyTestCase" name="test_vaccine_patient_ok" time="0.010" timestamp="2022-04-03T15:13:03"/>
+	<testcase classname="test_vaccine_patient_tests.MyTestCase" name="test_vaccine_patient_ok2" time="0.014" timestamp="2022-04-03T15:13:03"/>
+</testsuite>
