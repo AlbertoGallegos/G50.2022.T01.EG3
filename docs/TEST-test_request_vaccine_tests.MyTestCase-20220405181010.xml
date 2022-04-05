@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="test_request_vaccine_tests.MyTestCase-20220405181010" tests="22" file="test_request_vaccine_tests.py" time="0.364" timestamp="2022-04-05T18:10:11" failures="0" errors="0" skipped="0">
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccination_nook" time="0.011" timestamp="2022-04-05T18:10:11"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccination_nook10" time="0.015" timestamp="2022-04-05T18:10:11"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccination_nook11" time="0.015" timestamp="2022-04-05T18:10:11"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccination_nook12" time="0.014" timestamp="2022-04-05T18:10:11"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccination_nook13" time="0.016" timestamp="2022-04-05T18:10:11"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccination_nook14" time="0.013" timestamp="2022-04-05T18:10:11"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccination_nook15" time="0.014" timestamp="2022-04-05T18:10:11"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccination_nook16" time="0.023" timestamp="2022-04-05T18:10:11"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccination_nook2" time="0.016" timestamp="2022-04-05T18:10:11"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccination_nook3" time="0.015" timestamp="2022-04-05T18:10:11"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccination_nook4" time="0.014" timestamp="2022-04-05T18:10:11"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccination_nook5" time="0.014" timestamp="2022-04-05T18:10:11"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccination_nook6" time="0.015" timestamp="2022-04-05T18:10:11"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccination_nook7" time="0.015" timestamp="2022-04-05T18:10:11"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccination_nook8" time="0.014" timestamp="2022-04-05T18:10:11"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccination_nook9" time="0.014" timestamp="2022-04-05T18:10:11"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccination_ok" time="0.017" timestamp="2022-04-05T18:10:11"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccination_ok2" time="0.024" timestamp="2022-04-05T18:10:11"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccination_ok3" time="0.027" timestamp="2022-04-05T18:10:11"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccination_ok4" time="0.012" timestamp="2022-04-05T18:10:11"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccination_ok5" time="0.026" timestamp="2022-04-05T18:10:11"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccination_ok6" time="0.020" timestamp="2022-04-05T18:10:11"/>
+</testsuite>

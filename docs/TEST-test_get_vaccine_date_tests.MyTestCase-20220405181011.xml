@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="test_get_vaccine_date_tests.MyTestCase-20220405181011" tests="3" file="test_get_vaccine_date_tests.py" time="0.459" timestamp="2022-04-05T18:10:12" failures="0" errors="0" skipped="0">
+	<testcase classname="test_get_vaccine_date_tests.MyTestCase" name="test_get_vaccine_date_nodosnook" time="0.408" timestamp="2022-04-05T18:10:12"/>
+	<testcase classname="test_get_vaccine_date_tests.MyTestCase" name="test_get_vaccine_date_nook" time="0.026" timestamp="2022-04-05T18:10:12"/>
+	<testcase classname="test_get_vaccine_date_tests.MyTestCase" name="test_get_vaccine_date_ok" time="0.025" timestamp="2022-04-05T18:10:12"/>
+</testsuite>
